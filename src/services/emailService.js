@@ -50,7 +50,7 @@ const sendContractorCredentials = async (contractorEmail, password, contractorNa
         const mailOptions = {
             from: FROM_EMAIL,
             to: contractorEmail,
-            subject: 'Your Contractor Login Credentials - IWMS PDCC',
+            subject: 'Your Contractor Login Credentials - IWMS Zilla Parishad',
             html: `
                 <!DOCTYPE html>
                 <html>
@@ -69,7 +69,7 @@ const sendContractorCredentials = async (contractorEmail, password, contractorNa
                 <body>
                     <div class="container">
                         <div class="header">
-                            <h1>Welcome to IWMS PDCC</h1>
+                            <h1>Welcome to IWMS Zilla Parishad</h1>
                         </div>
                         <div class="content">
                             <p>Dear ${contractorName || 'Contractor'},</p>
@@ -95,11 +95,11 @@ const sendContractorCredentials = async (contractorEmail, password, contractorNa
                             <p>If you have any questions or need assistance, please contact the administrator.</p>
                             
                             <p>Best regards,<br>
-                            IWMS PDCC Team</p>
+                            IWMS Zilla Parishad Team</p>
                         </div>
                         <div class="footer">
                             <p>This is an automated email. Please do not reply to this message.</p>
-                            <p>&copy; ${new Date().getFullYear()} IWMS PDCC. All rights reserved.</p>
+                            <p>&copy; ${new Date().getFullYear()} IWMS Zilla Parishad. All rights reserved.</p>
                         </div>
                     </div>
                 </body>
@@ -128,7 +128,7 @@ const sendPasswordResetEmail = async (email, resetToken, resetUrl) => {
         const mailOptions = {
             from: FROM_EMAIL,
             to: email,
-            subject: 'Password Reset Request - IWMS PDCC',
+            subject: 'Password Reset Request - IWMS Zilla Parishad',
             html: `
                 <!DOCTYPE html>
                 <html>
@@ -163,11 +163,11 @@ const sendPasswordResetEmail = async (email, resetToken, resetUrl) => {
                             </div>
                             
                             <p>Best regards,<br>
-                            IWMS PDCC Team</p>
+                            IWMS Zilla Parishad Team</p>
                         </div>
                         <div class="footer">
                             <p>This is an automated email. Please do not reply to this message.</p>
-                            <p>&copy; ${new Date().getFullYear()} IWMS PDCC. All rights reserved.</p>
+                            <p>&copy; ${new Date().getFullYear()} IWMS Zilla Parishad. All rights reserved.</p>
                         </div>
                     </div>
                 </body>
