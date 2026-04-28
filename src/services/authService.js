@@ -142,16 +142,22 @@ const login = async (email, password) => {
     const contractorResult = await query(
       `SELECT contractor_id as user_id, email, password_hash, 
               COALESCE(majur_society_name, sube_first_name || ' ' || sube_last_name, sube_first_name, 'Contractor') as full_name,
-              status as is_active, email_sent as email_verified 
+              role_id, status as is_active, email_sent as email_verified 
        FROM iwms_contractor 
        WHERE email = $1 AND deleted_at IS NULL`,
       [email]
     );
 
     user = contractorResult.rows[0];
-
+    
     if (user) {
-      await applyContractorRole(user);
+      // Ensure contractor has a role, default to CONTRACTOR role if not set
+      if (!user.role_id) {
+        const contractorRoleResult = await query('SELECT role_id FROM iwms_roles WHERE role_name = $1', ['CONTRACTOR']);
+        if (contractorRoleResult.rows[0]) {
+          user.role_id = contractorRoleResult.rows[0].role_id;
+        }
+      }
     }
   }
 
@@ -176,11 +182,8 @@ const login = async (email, password) => {
     await query('UPDATE iwms_contractor SET updated_at = NOW() WHERE contractor_id = $1', [user.user_id]);
   }
 
-  if (!user.role_name && user.role_id) {
-    const roleResult = await query('SELECT role_name FROM iwms_roles WHERE role_id = $1', [user.role_id]);
-    user.role_name = roleResult.rows[0]?.role_name || 'USER';
-  }
-  user.role_name = user.role_name || 'USER';
+  const roleResult = await query('SELECT role_name FROM iwms_roles WHERE role_id = $1', [user.role_id]);
+  user.role_name = roleResult.rows[0]?.role_name || 'USER';
 
   const tokens = await buildTokens(user);
   const permissions = await getUserPermissions(user.role_id);

@@ -16,6 +16,7 @@ const createUserSchema = Joi.object({
 
 const updateUserSchema = Joi.object({
   full_name: Joi.string().min(2).max(100),
+  email: Joi.string().email(),
   role_id: Joi.number().integer().positive(),
   is_active: Joi.boolean(),
   email_verified: Joi.boolean()
